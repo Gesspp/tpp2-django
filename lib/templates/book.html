@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            {% if book.cover %}
+            <img src="{{ book.image.url }}" class="img-fluid rounded shadow" alt="{{ book.title }}">
+            {% else %}
+            <img src="{% static 'default.webp' %}" class="img-fluid rounded shadow" alt="Нет обложки">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ book.title }}</h2>
+            <p><strong>Автор:</strong> {{ book.author }}</p>
+            <p><strong>Дата публикации:</strong> {{ book.public_date }}</p>
+            <hr>
+            <p>{{ book.description }}</p>
+
+            {% if book.owner == request.user %}
+            <a href="{% url 'edit_book' book.id %}" class="btn btn-warning mt-3">Редактировать</a>
+            <a href="{% url 'delete_book' book.id %}" class="btn btn-danger mt-3">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
